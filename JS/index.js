@@ -197,6 +197,8 @@ function mostrarModal(talento) {
   $('#modaltalento-valores').empty();
   $('#modaltalento-valores').append(`Coste: ${coste}`);
   $('#modaltalento-valores').append(`<br>Enfriamiento: ${enfriamiento}`);
+  if (talento.acciones == 0)
+    $('#modaltalento-valores').append(`<br>No ocupa acción`);
   $('#modaltalento-tipo').html(`Tipo: ${talento.tipo}`);
   $('#myModal').modal('show');
 }
