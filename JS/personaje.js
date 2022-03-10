@@ -325,6 +325,17 @@ let personaje = {
       "cooldown": 3,
       "acciones": 1,
       "subtalentos":[]
+    },
+    {
+      "nombre": "Demostración de habilidad",
+      "descripción": "Permite al usuario aumentar repentinamente sus reflejos, lo que le otorga una acción adicional en el turno de Acción.\nDebe vaticinarse al comienzo del turno de Acción del usuario.\nSe Tira Agilidad+Prestidigitación (Dificultad 8)",
+      "tipo": "habilidad especial",
+      "activa": true,
+      "costeenergia": 3,
+      "costemana":0,
+      "cooldown": 3,
+      "acciones": 0,
+      "subtalentos":[]
     }
   ]
 }
