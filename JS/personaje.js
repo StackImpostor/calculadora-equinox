@@ -1,4 +1,4 @@
-{
+let personaje = {
   "nombre": "Zen'Reel",
   "clase": "arquero",
   "nivel": 10,
