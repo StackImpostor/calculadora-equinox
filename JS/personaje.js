@@ -13,7 +13,7 @@ let personaje = {
     "resistencia": 6,
     "inteligencia": 1,
     "manipulacion": 4,
-    "velo": 4,
+    "velo": 5,
     "astucia": 5,
     "agilidad": 5,
     "sensitividad": 5
@@ -36,11 +36,11 @@ let personaje = {
       "acciones": 0,
       "subtalentos":[
         {
-          "nombre": "Flecha del Hechicero",
-          "descripción": "El arquero crea una flecha básica de energia con la que puede realizar cualquier ataque o Talento",
+          "nombre": "Adepto",
+          "descripción": "El arquero puede generar flechas de energia sin ningún tipo de coste de forma instantánea.",
           "tipo": "talento",
-          "activa": true,
-          "costeenergia": 1,
+          "activa": false,
+          "costeenergia": 0,
           "costemana":0,
           "cooldown": 0,
           "acciones": 0,
@@ -298,10 +298,10 @@ let personaje = {
       "descripción": "El usuario es capaz de generar un punto débil a su objetivo, lo que le permite ignorar cualquier resistencia o inmunidad de dicho objetivo y ganar 3 éxitos adicionales como daño crítico. Si se tiene instinto 7 no ocupa acción",
       "tipo": "mantra",
       "activa": true,
-      "costeenergia": 2,
+      "costeenergia": 0,
       "costemana":0,
       "cooldown": 0,
-      "acciones": 1,
+      "acciones": 0,
       "subtalentos":[]
     },
     {
@@ -335,6 +335,17 @@ let personaje = {
       "costemana":0,
       "cooldown": 3,
       "acciones": 0,
+      "subtalentos":[]
+    },
+    {
+      "nombre": "Potenciación",
+      "descripción": "+3 en el atributo seleccionado durante 30min.\nAtributos desbloqueados: Ninguno\nAtributos por desbloquear: Fuerza, Destreza, Resistencia, Velo, Agilidad, Sensitividad",
+      "tipo": "Arte de combate",
+      "activa": true,
+      "costeenergia": 2,
+      "costemana":0,
+      "cooldown": 3,
+      "acciones": 1,
       "subtalentos":[]
     }
   ]
