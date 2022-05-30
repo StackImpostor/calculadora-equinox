@@ -148,6 +148,16 @@
     width:45%;
   }
 
+  .tirada-potenciada {
+    font-weight: bold;
+    color: rgb(15, 121, 15)
+  }
+
+  .tirada-reducida {
+    font-weight: bold;
+    color: rgb(110, 0, 0);
+  }
+
   #tiradas {
     align-content: center;
     padding-bottom: 10vh;

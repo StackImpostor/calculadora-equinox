@@ -122,38 +122,25 @@ function updateDisplayTiradas() {
   while(tiradas.length/2 < disparostotales){
     tiradas.push(0,0);
     let idx = tiradas.length / 2;
-    $('#tiradas').append(
-      `<div class="tirada">
-        <div class="input-group input-group-sm flex-nowrap">
-          <span class="input-group-text">${idx}:</span>
-          <input id="input-tirada-${idx}-0" type="number" class="form-control" onchange="guardarResultados(${idx},0)">
-          <button id="boton-multiplicador-${idx}-0" class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-            x1
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li><button class="dropdown-item" type="button">x0'5</button></li>
-            <li><button class="dropdown-item" type="button">x1</button></li>
-            <li><button class="dropdown-item" type="button">x1'5</button></li>
-            <li><button class="dropdown-item" type="button">x2</button></li>
-          </ul>
-          <button class="btn btn-sm btn-outline-secondary" onclick="bloquear(${idx},0)"><i class="fa-solid fa-check"></i></button>
-        </div>
-        <div class="input-group input-group-sm flex-nowrap">
-          <span class="input-group-text"><i class="fa-solid fa-dove"></i></span>
-          <input id="input-tirada-${idx}-1" type="number" class="form-control" tabindex=-1  onchange="guardarResultados(${idx},1)">
-          <button id="boton-multiplicador-${idx}-1" class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            x1
-          </button>
-          <ul class="dropdown-menu">
-            <li><button class="dropdown-item" type="button">x0'5</button></li>
-            <li><button class="dropdown-item" type="button">x1</button></li>
-            <li><button class="dropdown-item" type="button">x1'5</button></li>
-            <li><button class="dropdown-item" type="button">x2</button></li>
-          </ul>
-          <button class="btn btn-sm btn-outline-secondary" onclick="bloquear(${idx},1)"><i class="fa-solid fa-check"></i></button>
-        </div>
-      </div>`
-      );
+    let codigo = '<div class="tirada">';
+    for(let i = 0; i < 2; i++){
+      codigo += `<div class="input-group input-group-sm flex-nowrap">
+                  <span class="input-group-text">${idx}:</span>
+                  <input id="input-tirada-${idx}-${i}" type="number" class="form-control" ${(i==1) ? "tabindex=-1" : ""} onchange="guardarResultados(${idx},${i})">
+                  <button id="boton-multiplicador-${idx}-${i}" class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                    x1
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},0.5)" type="button">x0'5</button></li>
+                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1)" type="button">x1</button></li>
+                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.5)" type="button">x1'5</button></li>
+                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},2)" type="button">x2</button></li>
+                  </ul>
+                  <button class="btn btn-sm btn-outline-secondary" onclick="bloquear(${idx},${i})"><i class="fa-solid fa-check"></i></button>
+                </div>`;
+    }
+    codigo += '</div>'
+    $('#tiradas').append(codigo);
   }
 }
 
@@ -170,6 +157,25 @@ function guardarResultados(fila, columna){
 function bloquear(fila,columna){
   $(`#input-tirada-${fila}-${columna}`).prop("disabled",!$(`#input-tirada-${fila}-${columna}`).prop("disabled"));
   $(`#boton-multiplicador-${fila}-${columna}`).prop("disabled",!$(`#boton-multiplicador-${fila}-${columna}`).prop("disabled"));
+}
+
+function cambiarMultiplicador(fila,columna,valor){
+  $(`#boton-multiplicador-${fila}-${columna}`).html(("x"+valor).replace('.','\''));
+  let idx = (fila-1) * 2 + columna;
+  if(tiradas[idx] > 0){
+    let input = $(`#input-tirada-${fila}-${columna}`);
+    input.val(Math.floor(tiradas[idx] * valor));
+    if(valor > 1){
+      input.addClass("tirada-potenciada");
+      input.removeClass("tirada-reducida");
+    } else if(valor < 1) {
+      input.removeClass("tirada-potenciada");
+      input.addClass("tirada-reducida");
+    } else {
+      input.removeClass("tirada-potenciada");
+      input.removeClass("tirada-reducida");
+    }
+  }
 }
 
 function añadirDisparo(tipo) {
