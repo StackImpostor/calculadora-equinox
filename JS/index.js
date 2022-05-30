@@ -112,9 +112,48 @@ function updateDisplayDisparos() {
 function updateDisplayTiradas() {
   let disparostotales = disparosnormales + disparosdebilidad + disparosextra + disparosreaccion;
 
-  $('.tirada').remove();
-  for(let i = 0; i < disparostotales; i++){
-    // añadirTirada();
+  //Si sobran disparos se quitan
+  while(tiradas.length/2 > disparostotales){
+    tiradas.splice(tiradas.length - 2, 2);
+    $('#tiradas').children().last().remove();
+  }
+
+  //Si faltan disparos se añaden
+  while(tiradas.length/2 < disparostotales){
+    tiradas.push(0,0);
+    let idx = tiradas.length / 2;
+    $('#tiradas').append(
+      `<div class="tirada">
+        <div class="input-group input-group-sm flex-nowrap">
+          <span class="input-group-text">${idx}:</span>
+          <input id="input-tirada-${idx}-1" type="number" class="form-control">
+          <button class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+            x1
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <li><button class="dropdown-item" type="button">x0'5</button></li>
+            <li><button class="dropdown-item" type="button">x1</button></li>
+            <li><button class="dropdown-item" type="button">x1'5</button></li>
+            <li><button class="dropdown-item" type="button">x2</button></li>
+          </ul>
+          <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-check"></i></button>
+        </div>
+        <div class="input-group input-group-sm flex-nowrap">
+          <span class="input-group-text"><i class="fa-solid fa-dove"></i></span>
+          <input id="input-tirada-${idx}-2" type="number" class="form-control" tabindex=-1>
+          <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            x1
+          </button>
+          <ul class="dropdown-menu">
+            <li><button class="dropdown-item" type="button">x0'5</button></li>
+            <li><button class="dropdown-item" type="button">x1</button></li>
+            <li><button class="dropdown-item" type="button">x1'5</button></li>
+            <li><button class="dropdown-item" type="button">x2</button></li>
+          </ul>
+          <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-check"></i></button>
+        </div>
+      </div>`
+      );
   }
 }
 
@@ -133,25 +172,6 @@ function añadirDisparo(tipo) {
   recalcularDisparosExtra();
   updateDisplayDisparos();
   updateDisplayTiradas();
-}
-
-function añadirTirada(){
-  disparosreaccion++;
-  updateDisplayDisparos();
-  updateDisplayTiradas();
-  
-  // <div class="tirada">
-  //     <div class="input-group flex-nowrap">
-  //       <input type="number" class="form-control form-control-sm">
-  //       <button class="btn btn-sm btn-outline-secondary">x1'5</button>
-  //       <button class="btn btn-sm btn-outline-secondary">x2</button>
-  //     </div>
-  //     <div class="input-group flex-nowrap">
-  //       <input type="number" class="form-control form-control-sm">
-  //       <button class="btn btn-sm btn-outline-secondary">x1'5</button>
-  //       <button class="btn btn-sm btn-outline-secondary">x2</button>
-  //     </div>
-  //   </div>
 }
 
 function quitarDisparo(tipo) {
