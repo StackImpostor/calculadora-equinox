@@ -5,7 +5,7 @@ let personaje = {
   "estadisticas": {
     "vida": 11,
     "energia": 26,
-    "mana": 11
+    "mana": 10
   },
   "atributos": {
     "fuerza": 3,
@@ -14,12 +14,12 @@ let personaje = {
     "inteligencia": 1,
     "manipulacion": 4,
     "velo": 5,
-    "astucia": 5,
+    "astucia": 6,
     "agilidad": 5,
     "sensitividad": 5
   },
   "habilidades": {
-    "instinto": 5,
+    "instinto": 8,
     "armas_distancia": 10,
     "determinacion": 6,
     "prestidigitación": 10
@@ -47,12 +47,12 @@ let personaje = {
           "subtalentos":[]
         },
         {
-          "nombre": "Flecha Elemental",
-          "descripción": "El arquero puede dotar sus flechas de los diferentes elementos de Equinox. Agua, Aire, Fuego, Luz, Oscuridad y Tierra.",
+          "nombre": "Consecuencias inmutables",
+          "descripción": "El arquero puede cambiar el elemento de sus flechas sin ningún tipo de coste de forma instantánea. Elementos: Agua, Aire, Fuego, Luz, Oscuridad y Tierra.",
           "tipo": "talento",
-          "activa": true,
+          "activa": false,
           "costeenergia": 0,
-          "costemana":1,
+          "costemana":0,
           "cooldown": 0,
           "acciones": 0,
           "subtalentos":[]
@@ -339,7 +339,7 @@ let personaje = {
     },
     {
       "nombre": "Potenciación",
-      "descripción": "+3 en el atributo seleccionado durante 30min.\nAtributos desbloqueados: Ninguno\nAtributos por desbloquear: Fuerza, Destreza, Resistencia, Velo, Agilidad, Sensitividad",
+      "descripción": "+3 en el atributo seleccionado durante 30min.\n<b>Atributos desbloqueados</b>: Fuerza, Destreza, Resistencia, Velo\n<b>Atributos por desbloquear</b>: Agilidad, Sensitividad",
       "tipo": "Arte de combate",
       "activa": true,
       "costeenergia": 2,

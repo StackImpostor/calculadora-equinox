@@ -8,7 +8,7 @@
   }
 
   .boton-talentos {
-    position: absolute !important;
+    position: fixed !important;
     z-index: 100;
     width: 100vw;
     bottom: 0;
@@ -112,6 +112,8 @@
     margin-left: 5% !important;
   }
 
+  
+
   .talento {
     border: 1px solid rgb(156, 156, 156);
     background-color: rgb(231, 231, 231);
@@ -120,4 +122,40 @@
 
   .talento:hover {
     background-color: rgb(209, 209, 209);
+  }
+
+  .tirada {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
+  .tirada>div {
+    width:43%;
+  }
+
+  #tiradas {
+    align-content: center;
+    padding-bottom: 10vh;
+  }
+
+  .toggle-tiradas .active {
+    -webkit-transform: rotate(180deg);    
+    -moz-transform: rotate(180deg);        
+    -o-transform: rotate(180deg);          
+    -ms-transform: rotate(180deg);         
+    transform: rotate(180deg);
+    position: absolute;
+  }
+
+  .toggle-tiradas.collapsed .active {
+    -webkit-transform: rotate(0deg);     
+    -moz-transform: rotate(0deg);        
+    -o-transform: rotate(0deg);          
+    -ms-transform: rotate(0deg);   
+    transform: rotate(0deg);
+    position: absolute;
   }

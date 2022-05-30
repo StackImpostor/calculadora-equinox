@@ -5,6 +5,7 @@ let mana = personaje.estadisticas.mana, pmana = mana;
 let disparosnormales = 0;
 let disparosdebilidad = 0;
 let disparosextra = 0;
+let tiradas = [];
 
 $(document).ready(() => {
   for (let i = 0; i < personaje.talentos.length; i++) {
@@ -102,6 +103,15 @@ function updateDisplayDisparos() {
   }
 }
 
+function updateDisplayTiradas() {
+  let disparostotales = disparosnormales + disparosdebilidad + disparosextra;
+
+  $('.tirada').remove();
+  for(let i = 0; i < disparostotales; i++){
+    añadirTirada();
+  }
+}
+
 function añadirDisparo(tipo) {
   switch (tipo) {
     case "normal":
@@ -113,6 +123,35 @@ function añadirDisparo(tipo) {
   }
   recalcularDisparosExtra();
   updateDisplayDisparos();
+  updateDisplayTiradas();
+}
+
+function añadirTirada(){
+  $("#tiradas").children().last().before(`<div class="tirada">
+                          <div class="input-group flex-nowrap">
+                            <input type="number" class="form-control form-control-sm">
+                            <button class="btn btn-sm btn-outline-secondary">x1'5</button>
+                            <button class="btn btn-sm btn-outline-secondary">x2</button>
+                          </div>
+                          <div class="input-group flex-nowrap">
+                            <input type="number" class="form-control form-control-sm">
+                            <button class="btn btn-sm btn-outline-secondary">x1'5</button>
+                            <button class="btn btn-sm btn-outline-secondary">x2</button>
+                          </div>
+                        </div>`);
+  tiradas.push($("#tiradas").children().last().prev());
+  // <div class="tirada">
+  //     <div class="input-group flex-nowrap">
+  //       <input type="number" class="form-control form-control-sm">
+  //       <button class="btn btn-sm btn-outline-secondary">x1'5</button>
+  //       <button class="btn btn-sm btn-outline-secondary">x2</button>
+  //     </div>
+  //     <div class="input-group flex-nowrap">
+  //       <input type="number" class="form-control form-control-sm">
+  //       <button class="btn btn-sm btn-outline-secondary">x1'5</button>
+  //       <button class="btn btn-sm btn-outline-secondary">x2</button>
+  //     </div>
+  //   </div>
 }
 
 function quitarDisparo(tipo) {
@@ -128,6 +167,7 @@ function quitarDisparo(tipo) {
   }
   recalcularDisparosExtra();
   updateDisplayDisparos();
+  updateDisplayTiradas();
 }
 
 function recalcularDisparosExtra() {
@@ -142,6 +182,7 @@ function limpiarDisparos() {
   disparosdebilidad = 0;
   disparosextra = 0;
   updateDisplayDisparos();
+  updateDisplayTiradas();
 }
 
 function htmlTalento(talento, sub = false) {
@@ -264,9 +305,4 @@ function autocomplete(inp, arr) {
       x[i].classList.remove("autocomplete-active");
     }
   }
-  function closeAllLists(elmnt) {
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) { if (elmnt != x[i] && elmnt != inp) { x[i].parentNode.removeChild(x[i]); } }
-  }
-  document.addEventListener("click", function (e) { closeAllLists(e.target); });
 }
