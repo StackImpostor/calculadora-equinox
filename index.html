@@ -54,8 +54,11 @@
     <div id="disparos-debilidad" class="px-2 contenedor-disparos">
       <button class="btn btn-sm btn-outline-secondary mx-2" onclick="añadirDisparo('debilidad')">+</button>
     </div>
+    <h6>Extras por reacción: <span id="num-disparos-reaccion"></span></h6>
+    <div id="disparos-reaccion" class="px-2 contenedor-disparos">
+      <button class="btn btn-sm btn-outline-secondary mx-2" onclick="añadirDisparo('reaccion')">+</button>
+    </div>
     <h5 class="mt-3">Disparos totales: <span id="num-disparos-totales"></span></h5>
-    <small>Sumar reacciones a ataques y movimientos</small>
     <div id="disparos-totales" class="px-2 contenedor-disparos">
 
     </div>
@@ -74,6 +77,7 @@
           x1
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <li><button class="dropdown-item" type="button">x0'5</button></li>
           <li><button class="dropdown-item" type="button">x1</button></li>
           <li><button class="dropdown-item" type="button">x1'5</button></li>
           <li><button class="dropdown-item" type="button">x2</button></li>
@@ -87,6 +91,7 @@
           x1
         </button>
         <ul class="dropdown-menu">
+          <li><button class="dropdown-item" type="button">x0'5</button></li>
           <li><button class="dropdown-item" type="button">x1</button></li>
           <li><button class="dropdown-item" type="button">x1'5</button></li>
           <li><button class="dropdown-item" type="button">x2</button></li>
@@ -95,7 +100,7 @@
       </div>
     </div>
     
-    <button id="butAñadirTirada" class="btn btn-sm btn-outline-secondary mx-2 mt-3" onclick="añadirTirada()">+</button>
+    <!-- <button id="butAñadirTirada" class="btn btn-sm btn-outline-secondary mx-2 mt-3" onclick="añadirTirada()">+</button> -->
   </div>
   <!-- Offcanvas -->
   <button class="boton-talentos" data-bs-toggle="offcanvas" data-bs-target="#lista-talentos">Talentos <span

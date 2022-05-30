@@ -5,6 +5,7 @@ let mana = personaje.estadisticas.mana, pmana = mana;
 let disparosnormales = 0;
 let disparosdebilidad = 0;
 let disparosextra = 0;
+let disparosreaccion = 0;
 let tiradas = [];
 
 $(document).ready(() => {
@@ -87,9 +88,14 @@ function updateDisplayStats() {
 function updateDisplayDisparos() {
   $('#num-disparos-normales').html(disparosnormales);
   $('#num-disparos-debilidad').html(disparosdebilidad);
-  let disparostotales = disparosnormales + disparosdebilidad + disparosextra;
+  $('#num-disparos-reaccion').html(disparosreaccion);
+  let disparostotales = disparosnormales + disparosdebilidad + disparosextra + disparosreaccion;
   $('#num-disparos-totales').html(disparostotales);
   $('.disparo').remove();
+  for (let i = 0; i < disparosreaccion; i++) {
+    $('#disparos-reaccion').prepend(`<div class="disparo disparo-reaccion" onclick="quitarDisparo('reaccion')"></div>`);
+    $('#disparos-totales').prepend(`<div class="disparo disparo-reaccion"></div>`);
+  }
   for (let i = 0; i < disparosextra; i++) {
     $('#disparos-totales').prepend(`<div class="disparo disparo-extra"></div>`);
   }
@@ -104,11 +110,11 @@ function updateDisplayDisparos() {
 }
 
 function updateDisplayTiradas() {
-  let disparostotales = disparosnormales + disparosdebilidad + disparosextra;
+  let disparostotales = disparosnormales + disparosdebilidad + disparosextra + disparosreaccion;
 
   $('.tirada').remove();
   for(let i = 0; i < disparostotales; i++){
-    añadirTirada();
+    // añadirTirada();
   }
 }
 
@@ -120,6 +126,9 @@ function añadirDisparo(tipo) {
     case "debilidad":
       disparosdebilidad++;
       break;
+    case "reaccion":
+      disparosreaccion++;
+      break;
   }
   recalcularDisparosExtra();
   updateDisplayDisparos();
@@ -127,19 +136,10 @@ function añadirDisparo(tipo) {
 }
 
 function añadirTirada(){
-  $("#tiradas").children().last().before(`<div class="tirada">
-                          <div class="input-group flex-nowrap">
-                            <input type="number" class="form-control form-control-sm">
-                            <button class="btn btn-sm btn-outline-secondary">x1'5</button>
-                            <button class="btn btn-sm btn-outline-secondary">x2</button>
-                          </div>
-                          <div class="input-group flex-nowrap">
-                            <input type="number" class="form-control form-control-sm">
-                            <button class="btn btn-sm btn-outline-secondary">x1'5</button>
-                            <button class="btn btn-sm btn-outline-secondary">x2</button>
-                          </div>
-                        </div>`);
-  tiradas.push($("#tiradas").children().last().prev());
+  disparosreaccion++;
+  updateDisplayDisparos();
+  updateDisplayTiradas();
+  
   // <div class="tirada">
   //     <div class="input-group flex-nowrap">
   //       <input type="number" class="form-control form-control-sm">
@@ -164,6 +164,10 @@ function quitarDisparo(tipo) {
       if (disparosdebilidad > 0)
         disparosdebilidad--;
       break;
+    case "reaccion":
+      if (disparosreaccion > 0)
+        disparosreaccion--;
+      break;
   }
   recalcularDisparosExtra();
   updateDisplayDisparos();
@@ -181,6 +185,7 @@ function limpiarDisparos() {
   disparosnormales = 0;
   disparosdebilidad = 0;
   disparosextra = 0;
+  disparosreaccion = 0;
   updateDisplayDisparos();
   updateDisplayTiradas();
 }
