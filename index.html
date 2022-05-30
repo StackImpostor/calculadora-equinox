@@ -23,21 +23,21 @@
 <body>
   <header id="header" class="d-flex justify-content-between">
     <div class="caja-stats flex-fill">
-      <span id="display-vida" class="medidor-vida">HP:??/??</span>
+      <span id="display-vida" class="medidor-vida">PV:??/??</span>
       <div class="btn-group">
         <button class="btn btn-sm btn-light btn-outline-secondary" onclick="updateStats(-1,0,0)">-</span></button>
         <button class="btn btn-sm btn-light btn-outline-secondary" onclick="updateStats(1,0,0)">+</span></button>
       </div>
     </div>
     <div class="caja-stats flex-fill">
-      <span id="display-energia" class="medidor-energia">EP:??/??</span>
+      <span id="display-energia" class="medidor-energia">PE:??/??</span>
       <div class="btn-group">
         <button class="btn btn-sm btn-light btn-outline-secondary" onclick="updateStats(0,-1,0)">-</button>
         <button class="btn btn-sm btn-light btn-outline-secondary" onclick="updateStats(0,1,0)">+</button>
       </div>
     </div>
     <div class="caja-stats flex-fill">
-      <span id="display-mana" class="medidor-mana">MP:??/??</span>
+      <span id="display-mana" class="medidor-mana">PM:??/??</span>
       <div class="btn-group">
         <button class="btn btn-sm btn-light btn-outline-secondary" onclick="updateStats(0,0,-1)">-</button>
         <button class="btn btn-sm btn-light btn-outline-secondary" onclick="updateStats(0,0,1)">+</button>
@@ -78,8 +78,10 @@
           <li><button class="dropdown-item" type="button">x1'5</button></li>
           <li><button class="dropdown-item" type="button">x2</button></li>
         </ul>
+        <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-trash-can"></i></button>
       </div>
       <div class="input-group input-group-sm flex-nowrap">
+        <span class="input-group-text"><i class="fa-solid fa-dove"></i></span>
         <input type="number" class="form-control">
         <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           x1
@@ -89,6 +91,7 @@
           <li><button class="dropdown-item" type="button">x1'5</button></li>
           <li><button class="dropdown-item" type="button">x2</button></li>
         </ul>
+        <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-trash-can"></i></button>
       </div>
     </div>
     
