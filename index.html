@@ -63,9 +63,34 @@
   </div>
 <hr/>
   
-  <h5 data-bs-toggle="collapse" data-bs-target="#tiradas" class="toggle-tiradas collapsed mb-4">Tiradas<i class="fa-solid fa-caret-down active"></i></h5>
+  <h5 data-bs-toggle="collapse" data-bs-target="#tiradas" class="toggle-tiradas collapsed mb-4 ">Tiradas  <i class="fa-solid fa-caret-down active"></i></h5>
   <div id="tiradas" class="collapse">
     
+    <div class="tirada">
+      <div class="input-group input-group-sm flex-nowrap">
+        <span class="input-group-text">1:</span>
+        <input type="number" class="form-control">
+        <button class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+          x1
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <li><button class="dropdown-item" type="button">x1</button></li>
+          <li><button class="dropdown-item" type="button">x1'5</button></li>
+          <li><button class="dropdown-item" type="button">x2</button></li>
+        </ul>
+      </div>
+      <div class="input-group input-group-sm flex-nowrap">
+        <input type="number" class="form-control">
+        <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          x1
+        </button>
+        <ul class="dropdown-menu">
+          <li><button class="dropdown-item" type="button">x1</button></li>
+          <li><button class="dropdown-item" type="button">x1'5</button></li>
+          <li><button class="dropdown-item" type="button">x2</button></li>
+        </ul>
+      </div>
+    </div>
     
     <button id="butAñadirTirada" class="btn btn-sm btn-outline-secondary mx-2 mt-3" onclick="añadirTirada()">+</button>
   </div>

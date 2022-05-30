@@ -107,6 +107,13 @@
     color: rgb(110, 0, 0);
   }
 
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+  }
+
   .subtalento {
     width: 95% !important;
     margin-left: 5% !important;
@@ -148,7 +155,7 @@
     -o-transform: rotate(180deg);          
     -ms-transform: rotate(180deg);         
     transform: rotate(180deg);
-    position: absolute;
+    /* position: absolute; */
   }
 
   .toggle-tiradas.collapsed .active {
@@ -157,5 +164,5 @@
     -o-transform: rotate(0deg);          
     -ms-transform: rotate(0deg);   
     transform: rotate(0deg);
-    position: absolute;
+    /* position: absolute; */
   }
