@@ -147,10 +147,14 @@ function updateDisplayTiradas() {
 function guardarResultados(fila, columna){
   let idx = (fila-1) * 2 + columna;
   let valor = parseInt($(`#input-tirada-${fila}-${columna}`).val());
+  $(`#input-tirada-${fila}-${columna}`).removeClass("tirada-potenciada");
+  $(`#input-tirada-${fila}-${columna}`).removeClass("tirada-reducida");
   tiradas[idx++] = valor;
   if(columna == 0){
     tiradas[idx] = valor + 2;
     $(`#input-tirada-${fila}-1`).val(tiradas[idx]);
+    $(`#input-tirada-${fila}-1`).removeClass("tirada-potenciada");
+    $(`#input-tirada-${fila}-1`).removeClass("tirada-reducida");
   }
 }
 
