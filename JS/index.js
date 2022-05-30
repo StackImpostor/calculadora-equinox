@@ -125,7 +125,7 @@ function updateDisplayTiradas() {
     let codigo = '<div class="tirada">';
     for(let i = 0; i < 2; i++){
       codigo += `<div class="input-group input-group-sm flex-nowrap">
-                  <span class="input-group-text">${idx}:</span>
+                  ${(i == 0) ? `<span class="input-group-text">${idx}:</span>` : `<span class="input-group-text"><i class="fa-solid fa-dove"></i></span>`}
                   <input id="input-tirada-${idx}-${i}" type="number" class="form-control" ${(i==1) ? "tabindex=-1" : ""} onchange="guardarResultados(${idx},${i})">
                   <button id="boton-multiplicador-${idx}-${i}" class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                     x1
