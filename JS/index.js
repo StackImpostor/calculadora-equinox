@@ -126,8 +126,8 @@ function updateDisplayTiradas() {
       `<div class="tirada">
         <div class="input-group input-group-sm flex-nowrap">
           <span class="input-group-text">${idx}:</span>
-          <input id="input-tirada-${idx}-1" type="number" class="form-control">
-          <button class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+          <input id="input-tirada-${idx}-0" type="number" class="form-control" onchange="guardarResultados(${idx},0)">
+          <button id="boton-multiplicador-${idx}-0" class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
             x1
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -136,12 +136,12 @@ function updateDisplayTiradas() {
             <li><button class="dropdown-item" type="button">x1'5</button></li>
             <li><button class="dropdown-item" type="button">x2</button></li>
           </ul>
-          <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-check"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="bloquear(${idx},0)"><i class="fa-solid fa-check"></i></button>
         </div>
         <div class="input-group input-group-sm flex-nowrap">
           <span class="input-group-text"><i class="fa-solid fa-dove"></i></span>
-          <input id="input-tirada-${idx}-2" type="number" class="form-control" tabindex=-1>
-          <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <input id="input-tirada-${idx}-1" type="number" class="form-control" tabindex=-1  onchange="guardarResultados(${idx},1)">
+          <button id="boton-multiplicador-${idx}-1" class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             x1
           </button>
           <ul class="dropdown-menu">
@@ -150,11 +150,26 @@ function updateDisplayTiradas() {
             <li><button class="dropdown-item" type="button">x1'5</button></li>
             <li><button class="dropdown-item" type="button">x2</button></li>
           </ul>
-          <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-check"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="bloquear(${idx},1)"><i class="fa-solid fa-check"></i></button>
         </div>
       </div>`
       );
   }
+}
+
+function guardarResultados(fila, columna){
+  let idx = (fila-1) * 2 + columna;
+  let valor = parseInt($(`#input-tirada-${fila}-${columna}`).val());
+  tiradas[idx++] = valor;
+  if(columna == 0){
+    tiradas[idx] = valor + 2;
+    $(`#input-tirada-${fila}-1`).val(tiradas[idx]);
+  }
+}
+
+function bloquear(fila,columna){
+  $(`#input-tirada-${fila}-${columna}`).prop("disabled",!$(`#input-tirada-${fila}-${columna}`).prop("disabled"));
+  $(`#boton-multiplicador-${fila}-${columna}`).prop("disabled",!$(`#boton-multiplicador-${fila}-${columna}`).prop("disabled"));
 }
 
 function añadirDisparo(tipo) {
