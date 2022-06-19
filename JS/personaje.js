@@ -82,7 +82,7 @@ let personaje = {
       "subtalentos":[
         {
           "nombre": "Tiro perfecto",
-          "descripción": "El arquero obtiene 2 daños directos adicionales con sus ataques con el arco siempre que golpeen el punto débil de un objetivo.",
+          "descripción": "El arquero obtiene 3 dados de daño adicionales con sus ataques con el arco siempre que golpeen el punto débil de un objetivo.",
           "tipo": "talento",
           "activa": false,
           "costeenergia": 0,
@@ -346,6 +346,17 @@ let personaje = {
       "costemana":0,
       "cooldown": 3,
       "acciones": 1,
+      "subtalentos":[]
+    },
+    {
+      "nombre": "Emblema viento del norte",
+      "descripción": "Una vez por combate, cuando un aliado esté a punto de recibir un golpe letal obtienes una acción de ataque contra el agresor. Esta acción ocurre antes de que el oponente realice su ataque.",
+      "tipo": "Emblema",
+      "activa": false,
+      "costeenergia": 0,
+      "costemana":0,
+      "cooldown": 0,
+      "acciones": 0,
       "subtalentos":[]
     }
   ]
