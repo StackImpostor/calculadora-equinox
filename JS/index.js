@@ -133,10 +133,9 @@ function updateDisplayTiradas() {
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                     <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},0.5)" type="button">x0'5</button></li>
                     <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1)" type="button">x1</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.2)" type="button">x1'2</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.25)" type="button">x1'25</button></li>
                     <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.3)" type="button">x1'3</button></li>
                     <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.5)" type="button">x1'5</button></li>
+                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.95)" type="button">x1'95</button></li>
                     <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},2)" type="button">x2</button></li>
                   </ul>
                   <button class="btn btn-sm btn-outline-secondary" onclick="bloquear(${idx},${i})"><i class="fa-solid fa-check"></i></button>
