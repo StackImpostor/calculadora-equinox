@@ -222,10 +222,11 @@ function quitarDisparo(tipo) {
 }
 
 function recalcularDisparosExtra() {
-  disparosextra = 0
-  for (let i = 0; i < (disparosnormales + disparosdebilidad + disparosextra); i++) {
-    if (i % 2 == 1) disparosextra++;
-  }
+  // disparosextra = 0
+  // for (let i = 0; i < (disparosnormales + disparosdebilidad + disparosextra); i++) {
+  //   if (i % 2 == 1) disparosextra++;
+  // }
+  disparosextra = Math.floor((disparosnormales + disparosdebilidad) / 2);
 }
 
 function limpiarDisparos() {
