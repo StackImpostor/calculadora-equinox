@@ -50,11 +50,11 @@
     <div id="disparos-normales" class="px-2 contenedor-disparos">
       <button class="btn btn-sm btn-outline-secondary mx-2" onclick="añadirDisparo('normal')">+</button>
     </div>
-    <h6>Extras por debilidad: <span id="num-disparos-debilidad"></span></h6>
-    <div id="disparos-debilidad" class="px-2 contenedor-disparos">
+    <h6 style="display:none">Extras por debilidad: <span id="num-disparos-debilidad"></span></h6>
+    <div id="disparos-debilidad" class="px-2 contenedor-disparos" style="display:none">
       <button class="btn btn-sm btn-outline-secondary mx-2" onclick="añadirDisparo('debilidad')">+</button>
     </div>
-    <h6>Extras por reacción: <span id="num-disparos-reaccion"></span></h6>
+    <h6>Extras: <span id="num-disparos-reaccion"></span></h6>
     <div id="disparos-reaccion" class="px-2 contenedor-disparos">
       <button class="btn btn-sm btn-outline-secondary mx-2" onclick="añadirDisparo('reaccion')">+</button>
     </div>
@@ -103,11 +103,11 @@
     <!-- <button id="butAñadirTirada" class="btn btn-sm btn-outline-secondary mx-2 mt-3" onclick="añadirTirada()">+</button> -->
   </div>
   <!-- Offcanvas -->
-  <button class="boton-talentos" data-bs-toggle="offcanvas" data-bs-target="#lista-talentos">Talentos <span
+  <button class="boton-talentos" data-bs-toggle="offcanvas" data-bs-target="#lista-talentos">Habilidades <span
       class="fa-solid fa-angle-up"></span></button>
   <section id="lista-talentos" data-bs-backdrop="false" class="dflex flex-column flex-fill offcanvas offcanvas-bottom">
     <div class="offcanvas-header">
-      <h4 class="offcanvas-title">Talentos</h4>
+      <h4 class="offcanvas-title">Habilidades</h4>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
     </div>
     <div id="contenedor-talentos" class="offcanvas-body p-0 d-flex flex-column">

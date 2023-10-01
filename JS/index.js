@@ -55,7 +55,7 @@ $(document).ready(() => {
 function clickHandler(e) {
   let nombretalento = e.currentTarget.getAttribute("data-nombre-talento")
   let talento = getTalento(nombretalento);
-  updateStats(0, -talento.costeenergia, -talento.costemana);
+  updateStats(-talento.costevida, -talento.costeenergia, -talento.costemana);
   window.navigator.vibrate("10");
   e.stopPropagation();
 }
@@ -252,6 +252,9 @@ function htmlTalento(talento, sub = false) {
               <div class="border px-2 flex-fill">
                 <span class="medidor-mana">MP: ${talento.costemana}</span>
               </div>
+              <div class="border px-2 flex-fill">
+                <span class="medidor-vida">HP: ${talento.costevida}</span>
+              </div>
             </div>`;
   }
   for (let i = 0; i < talento.subtalentos.length; i++) {
@@ -284,6 +287,8 @@ function mostrarModal(talento) {
     coste = `${talento.costeenergia} Energia`;
   } else if (talento.costemana > 0) {
     coste = `${talento.costemana} Mana`;
+  } else if (talento.costevida > 0) {
+    coste = `${talento.costevida} Vida`;
   }
   let enfriamiento = "Sin enfriamiento";
   if (talento.cooldown > 0) enfriamiento = `${talento.cooldown} turno`;
