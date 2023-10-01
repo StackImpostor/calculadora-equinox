@@ -30,7 +30,7 @@ let personaje = {
       "descripción": "El usuario es capaz de generar un punto débil a su objetivo, lo que le permite ignorar cualquier resistencia o inmunidad de dicho objetivo y ganar 3 éxitos adicionales como daño crítico. Si se tiene instinto 7 no ocupa acción",
       "tipo": "Mantra",
       "activa": true,
-      "costeenergia": 0,
+      "costeenergia": 2,
       "costemana":0,
       "costevida":0,
       "cooldown": 0,
