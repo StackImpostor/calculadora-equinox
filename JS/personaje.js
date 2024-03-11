@@ -1,27 +1,30 @@
 let personaje = {
   "nombre": "Zen'Reel",
-  "clase": "arquero",
+  "clase": "-",
   "nivel": 10,
   "estadisticas": {
-    "vida": 23,
-    "energia": 37,
-    "mana": 21
+    "vida": 27,
+    "energia": 43,
+    "mana": 25
   },
   "atributos": {
-    "fuerza": 5,
+    "fuerza": 4,
     "destreza": 12,
-    "resistencia": 10,
+    "resistencia": 9,
+    "agilidad": 6,
     "inteligencia": 3,
-    "manipulacion": 6,
-    "velo": 7,
-    "astucia": 10,
-    "agilidad": 7,
-    "sensitividad": 7
+    "manipulacion": 5,
+    "velo": 9,
+    "voluntad": 9,
+    "astucia": 5,
+    "carisma": 3,
+    "sensitividad": 6,
+    "vigor": 9
   },
   "habilidades": {
     "instinto": 9,
     "armas_distancia": 10,
-    "determinacion": 6,
+    "determinacion": 7,
     "prestidigitación": 10
   },
   "talentos": [
@@ -95,6 +98,18 @@ let personaje = {
       "costevida":4,
       "cooldown": 0,
       "acciones": 2,
+      "subtalentos":[]
+    },
+    {
+      "nombre": "Giro fuego (Nombre WIP)",
+      "descripción": "Un disparo de fuego que no hace daño pero aplica el estado \"quemado\" al objetivo.\nEl objetivo recibe 5 daños al final de cada turno.",
+      "tipo": "Técnica inventada",
+      "activa": true,
+      "costeenergia": 0,
+      "costemana":5,
+      "costevida":0,
+      "cooldown": 0,
+      "acciones": 1,
       "subtalentos":[]
     },
     {
