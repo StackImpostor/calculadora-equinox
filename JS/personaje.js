@@ -96,7 +96,7 @@ let personaje = {
       "costeenergia": 0,
       "costemana":0,
       "costevida":4,
-      "cooldown": 0,
+      "cooldown": 3,
       "acciones": 2,
       "subtalentos":[]
     },
