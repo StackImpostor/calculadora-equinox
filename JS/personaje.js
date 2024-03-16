@@ -81,7 +81,7 @@ let personaje = {
       "descripción": "+3 en el atributo seleccionado durante 30min.\n<b>Atributos desbloqueados</b>: Fuerza, Destreza, Resistencia, Velo\n<b>Atributos por desbloquear</b>: Agilidad, Sensitividad",
       "tipo": "Arte de combate",
       "activa": true,
-      "costeenergia": 2,
+      "costeenergia": 3,
       "costemana":0,
       "costevida":0,
       "cooldown": 3,
