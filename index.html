@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="CSS/index.css">
   <script src="JS/personaje.js"></script>
   <script src="JS/index.js"></script>
+  <script src="JS/drag.js"></script>
 </head>
 
 <body>
@@ -64,47 +65,24 @@
     </div>
     <button class="btn btn-sm btn-outline-secondary mx-3 mt-4" onclick="limpiarDisparos()">Limpiar</button>
   </div>
-<hr/>
+  <hr/>
   
   <h5 data-bs-toggle="collapse" data-bs-target="#tiradas" class="toggle-tiradas mb-4 ">Tiradas  <i class="fa-solid fa-caret-down active"></i></h5>
   <div id="tiradas" class="collapse show">
     
-    <!-- <div class="tirada">
-      <div class="input-group input-group-sm flex-nowrap">
-        <span class="input-group-text">1:</span>
-        <input type="number" class="form-control">
-        <button class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-          x1
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-          <li><button class="dropdown-item" type="button">x0'5</button></li>
-          <li><button class="dropdown-item" type="button">x1</button></li>
-          <li><button class="dropdown-item" type="button">x1'5</button></li>
-          <li><button class="dropdown-item" type="button">x2</button></li>
-        </ul>
-        <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-check"></i></button>
-      </div>
-      <div class="input-group input-group-sm flex-nowrap">
-        <span class="input-group-text"><i class="fa-solid fa-dove"></i></span>
-        <input type="number" class="form-control">
-        <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          x1
-        </button>
-        <ul class="dropdown-menu">
-          <li><button class="dropdown-item" type="button">x0'5</button></li>
-          <li><button class="dropdown-item" type="button">x1</button></li>
-          <li><button class="dropdown-item" type="button">x1'5</button></li>
-          <li><button class="dropdown-item" type="button">x2</button></li>
-        </ul>
-        <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-check"></i></button>
-      </div>
-    </div> -->
     
-    <!-- <button id="butAñadirTirada" class="btn btn-sm btn-outline-secondary mx-2 mt-3" onclick="añadirTirada()">+</button> -->
+  </div>
+
+  <!-- Notas -->
+  <div id="apuntes" class="apuntes">
+    <div id="apuntesheader">
+    </div>
+    <textarea name="" id=""></textarea>
   </div>
   <!-- Offcanvas -->
-  <button class="boton-talentos" data-bs-toggle="offcanvas" data-bs-target="#lista-talentos">Habilidades <span
-      class="fa-solid fa-angle-up"></span></button>
+  <button class="boton-talentos" data-bs-toggle="offcanvas" data-bs-target="#lista-talentos">
+    Habilidades <span class="fa-solid fa-angle-up"></span>
+  </button>
   <section id="lista-talentos" data-bs-backdrop="false" class="dflex flex-column flex-fill offcanvas offcanvas-bottom">
     <div class="offcanvas-header">
       <h4 class="offcanvas-title">Habilidades</h4>
