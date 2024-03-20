@@ -78,7 +78,7 @@ let personaje = {
     },
     {
       "nombre": "Potenciación",
-      "descripción": "+3 en el atributo seleccionado durante 30min.\n<b>Atributos desbloqueados</b>: Fuerza, Destreza, Resistencia, Velo\n<b>Atributos por desbloquear</b>: Agilidad, Sensitividad",
+      "descripción": "+3 en el atributo seleccionado durante 30min.\n<b>Atributos desbloqueados</b>: Fuerza, Destreza, Resistencia, Velo\n<b>Atributos por desbloquear</b>: Agilidad, Sensitividad, Vigor",
       "tipo": "Arte de combate",
       "activa": true,
       "costeenergia": 3,
@@ -90,10 +90,10 @@ let personaje = {
     },
     {
       "nombre": "Gran pajaro de (elemento)",
-      "descripción": "Dispara un pájaro de energia vital que hace el daño de un disparo normal x3 en un area con forma de + en el punto impactado. Cuesta 4 de vida.",
+      "descripción": "Dispara un pájaro de energia vital que hace el daño de un disparo normal x2 + x1'5 en un area con forma de + en el punto impactado. Cuesta 4 de vida.",
       "tipo": "Técnica inventada",
       "activa": true,
-      "costeenergia": 0,
+      "costeenergia": 3,
       "costemana":0,
       "costevida":4,
       "cooldown": 3,

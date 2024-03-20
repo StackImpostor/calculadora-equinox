@@ -4,7 +4,7 @@
 
   html, body{
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
   }
 
   body {
@@ -190,8 +190,24 @@
   }
 
   .apuntes {
-    background-color: red;
-    width: 100px;
-    height: 100px;
+    background-color: gray;
+    width: 170px;
+    height: 235px;
+    top: 70px;
+    left: 95vw;
     position: absolute;
+    resize: both;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+  }
+
+  .apuntes > div {
+    padding-top: 5px;
+  }
+
+  .apuntes > textarea {
+    width: 100%;
+    flex-grow: 1;
   }
