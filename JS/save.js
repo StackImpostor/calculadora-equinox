@@ -5,8 +5,6 @@ function saveData(){
   localStorage.setItem("mana-actual",mana);
   localStorage.setItem("energia-actual",energia);
   localStorage.setItem("notas-equinox",notas);
-
-  console.log("guardando");
 }
 
 function loadData(){
