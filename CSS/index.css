@@ -5,7 +5,6 @@
   html, body{
     max-width: 100%;
     overflow-x: hidden !important;
-    touch-action: none;
   }
 
   body {
@@ -207,6 +206,7 @@
     flex-direction: column;
     border-radius: 5px;
     border-bottom-right-radius: 0px !important;
+    touch-action: none;
   }
 
   .apuntes > div {
