@@ -217,4 +217,5 @@
     width: 100%;
     flex-grow: 1;
     border-bottom-left-radius: 5px;
+    font-size: 12px;
   }
