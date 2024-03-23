@@ -22,6 +22,7 @@ $(document).ready(() => {
       vida = personaje.estadisticas.vida;
       window.navigator.vibrate("10");
       updateDisplayStats();
+      console.log("Activado long press");
     });
   });
   document.querySelectorAll('#display-energia').forEach(item => {
@@ -29,6 +30,7 @@ $(document).ready(() => {
       energia = personaje.estadisticas.energia;
       window.navigator.vibrate("10");
       updateDisplayStats();
+      console.log("Activado long press");
     });
   });
   document.querySelectorAll('#display-mana').forEach(item => {
@@ -36,6 +38,7 @@ $(document).ready(() => {
       mana = personaje.estadisticas.mana;
       window.navigator.vibrate("10");
       updateDisplayStats();
+      console.log("Activado long press");
     });
   });
   updateDisplayStats();
