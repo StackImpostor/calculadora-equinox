@@ -9,19 +9,24 @@ let disparosreaccion = 0;
 let tiradas = [];
 
 $(document).ready(() => {
+  loadData();
   for (let i = 0; i < personaje.talentos.length; i++) {
     let talento = personaje.talentos[i];
     $('#contenedor-talentos').append(htmlTalento(talento));
   }
-  $('.talento').click(e => clickHandler(e));
+  $('.talento').click(e => clickHandlerTalentos(e));
+  // $('#notas').change(e => saveData());
+
   document.querySelectorAll('.talento').forEach(item => {
-    item.addEventListener('long-press', e => longpressHandler(e));
+    item.addEventListener('long-press', e => longpressHandlerTalento(e));
   });
+
   document.querySelectorAll('#display-vida').forEach(item => {
     item.addEventListener('long-press', e => {
       vida = personaje.estadisticas.vida;
       window.navigator.vibrate("10");
       updateDisplayStats();
+      // saveData();
       console.log("Activado long press");
     });
   });
@@ -30,6 +35,7 @@ $(document).ready(() => {
       energia = personaje.estadisticas.energia;
       window.navigator.vibrate("10");
       updateDisplayStats();
+      // saveData();
       console.log("Activado long press");
     });
   });
@@ -38,6 +44,7 @@ $(document).ready(() => {
       mana = personaje.estadisticas.mana;
       window.navigator.vibrate("10");
       updateDisplayStats();
+      // saveData();
       console.log("Activado long press");
     });
   });
@@ -55,7 +62,11 @@ $(document).ready(() => {
   });
 });
 
-function clickHandler(e) {
+$(window).on('beforeunload', function(){
+  saveData();
+});
+
+function clickHandlerTalentos(e) {
   let nombretalento = e.currentTarget.getAttribute("data-nombre-talento")
   let talento = getTalento(nombretalento);
   updateStats(-talento.costevida, -talento.costeenergia, -talento.costemana);
@@ -63,7 +74,7 @@ function clickHandler(e) {
   e.stopPropagation();
 }
 
-function longpressHandler(e) {
+function longpressHandlerTalento(e) {
   let nombretalento = e.currentTarget.getAttribute("data-nombre-talento")
   let talento = getTalento(nombretalento);
   if (talento != null) mostrarModal(talento);
@@ -80,6 +91,7 @@ function updateStats(v, e, m) {
   pmana = mana;
   mana += m;
   updateDisplayStats();
+  // saveData();
 }
 
 function updateDisplayStats() {
@@ -242,7 +254,7 @@ function limpiarDisparos() {
 }
 
 function htmlTalento(talento, sub = false) {
-  res = `<div data-nombre-talento="${talento.nombre}" data-long-press-delay="150" class="container container-fluid d-flex flex-column talento${sub ? ' subtalento' : ''}">
+  res = `<div data-nombre-talento="${talento.nombre}" data-long-press-delay="500" class="container container-fluid d-flex flex-column talento${sub ? ' subtalento' : ''}">
             <h5>${talento.nombre}</h5>`;
   if (talento.activa) {
     res += `<div class="container container-fluid d-flex p-0">
