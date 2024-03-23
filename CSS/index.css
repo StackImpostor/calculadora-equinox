@@ -123,9 +123,9 @@
     flex-grow: 1;
   }
 
-  .display-stat:hover {
+  /* .display-stat:hover {
     background-color: rgb(150,150,150);
-  }
+  } */
 
   .display-stat:active {
     background-color: rgb(130, 130, 130);
