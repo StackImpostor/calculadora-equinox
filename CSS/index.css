@@ -119,6 +119,18 @@
     color: rgb(110, 0, 0);
   }
 
+  .display-stat {
+    flex-grow: 1;
+  }
+
+  /* .display-stat:hover {
+    background-color: rgb(150,150,150);
+  } */
+
+  .display-stat:active {
+    background-color: rgb(130, 130, 130);
+  }
+
   select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -191,16 +203,22 @@
 
   .apuntes {
     background-color: gray;
-    width: 170px;
+    /* width: 170px;
     height: 235px;
     top: 70px;
-    left: 95vw;
+    left: 95vw; */
+    top: 80px;
+    left: 210px;
+    width: 145px;
+    height: 245px;
     position: absolute;
     resize: both;
     overflow: auto;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
+    border-bottom-right-radius: 0px !important;
+    touch-action: none;
   }
 
   .apuntes > div {
@@ -210,4 +228,6 @@
   .apuntes > textarea {
     width: 100%;
     flex-grow: 1;
+    border-bottom-left-radius: 5px;
+    font-size: 14px;
   }
