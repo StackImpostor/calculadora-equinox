@@ -7,6 +7,7 @@ let disparosdebilidad = 0;
 let disparosextra = 0;
 let disparosreaccion = 0;
 let tiradas = [];
+let multiplicadores = [];
 
 $(document).ready(() => {
   loadData();
@@ -130,39 +131,50 @@ function updateDisplayTiradas() {
   //Si sobran disparos se quitan
   while(tiradas.length/2 > disparostotales){
     tiradas.splice(tiradas.length - 2, 2);
+    multiplicadores.splice(multiplicadores.length - 2 , 2);
     $('#tiradas').children().last().remove();
   }
 
   //Si faltan disparos se añaden
   while(tiradas.length/2 < disparostotales){
     tiradas.push(0,0);
-    let idx = tiradas.length / 2;
+    multiplicadores.push([],[]);
+    let idx = (tiradas.length / 2)-1;
     let codigo = '<div class="tirada">';
     for(let i = 0; i < 2; i++){
+      codigo += `<div>`;
       codigo += `<div class="input-group input-group-sm flex-nowrap">
-                  ${(i == 0) ? `<span class="input-group-text">${idx}:</span>` : `<span class="input-group-text"><i class="fa-solid fa-dove"></i></span>`}
-                  <input id="input-tirada-${idx}-${i}" type="number" class="form-control" ${(i==1) ? "tabindex=-1" : ""} onchange="guardarResultados(${idx},${i})">
+                  ${(i == 0) ? `<span class="input-group-text">${idx+1}:</span>` : `<span class="input-group-text"><i class="fa-solid fa-dove"></i></span>`}
+                  <input id="input-tirada-${idx}-${i}" type="number" class="form-control" ${(i==1) ? "tabindex=-1" : ""} onchange="guardarTirada(${idx},${i})" onfocus="verSinMultiplicador(${idx},${i})" onblur="aplicarMultiplicadores(${idx},${i})">
                   <button id="boton-multiplicador-${idx}-${i}" class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                    x1
+                    x?
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},0.5)" type="button">x0'5</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1)" type="button">x1</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.3)" type="button">x1'3</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.5)" type="button">x1'5</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.95)" type="button">x1'95</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},2)" type="button">x2</button></li>
+                    <li><button class="dropdown-item" onclick="añadirMultiplicador(${idx},${i},0.5)" type="button">x0'5</button></li>
+                    <li><button class="dropdown-item" onclick="añadirMultiplicador(${idx},${i},1.3)" type="button">x1'3</button></li>
+                    <li><button class="dropdown-item" onclick="añadirMultiplicador(${idx},${i},1.5)" type="button">x1'5</button></li>
+                    <li><button class="dropdown-item" onclick="añadirMultiplicador(${idx},${i},2)" type="button">x2</button></li>
+                    <div class="input-group mx-2">
+                      <input type="text" class="form-control" placeholder="Custom" aria-label="Custom" aria-describedby="button-addon2">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="console.log('hola')">+</button>
+                      </div>
+                    </div>
                   </ul>
                   <button class="btn btn-sm btn-outline-secondary" onclick="bloquear(${idx},${i})"><i class="fa-solid fa-check"></i></button>
                 </div>`;
+      
+      codigo += `<div id="multiplicadores-tirada-${idx}-${i}" class="multiplicadores-tirada">
+                </div>`;
+      codigo += `</div>`;
     }
     codigo += '</div>'
     $('#tiradas').append(codigo);
   }
 }
 
-function guardarResultados(fila, columna){
-  let idx = (fila-1) * 2 + columna;
+function guardarTirada(fila, columna){
+  let idx = fila * 2 + columna;
   let valor = parseInt($(`#input-tirada-${fila}-${columna}`).val());
   $(`#input-tirada-${fila}-${columna}`).removeClass("tirada-potenciada");
   $(`#input-tirada-${fila}-${columna}`).removeClass("tirada-reducida");
@@ -180,23 +192,78 @@ function bloquear(fila,columna){
   $(`#boton-multiplicador-${fila}-${columna}`).prop("disabled",!$(`#boton-multiplicador-${fila}-${columna}`).prop("disabled"));
 }
 
-function cambiarMultiplicador(fila,columna,valor){
-  $(`#boton-multiplicador-${fila}-${columna}`).html(("x"+valor).replace('.','\''));
-  let idx = (fila-1) * 2 + columna;
-  if(tiradas[idx] > 0){
-    let input = $(`#input-tirada-${fila}-${columna}`);
-    input.val(Math.floor(tiradas[idx] * valor));
-    if(valor > 1){
-      input.addClass("tirada-potenciada");
-      input.removeClass("tirada-reducida");
-    } else if(valor < 1) {
-      input.removeClass("tirada-potenciada");
-      input.addClass("tirada-reducida");
+function añadirMultiplicador(fila,columna,valor){
+  let mults = multiplicadores[fila * 2 + columna];
+  
+  let idx = mults.length;
+  mults.push(valor);
+
+  let pill = `<span id="mult-${fila}-${columna}-${idx}" onclick="quitarMultiplicador(${fila},${columna},${idx},${valor})" class="pill">x${valor}</span>`;
+  $(`#multiplicadores-tirada-${fila}-${columna}`).append(pill);
+  
+  aplicarMultiplicadores(fila,columna);
+}
+
+function quitarMultiplicador(fila,columna,idx,valor){
+  let mults = multiplicadores[fila * 2 + columna];
+  let index = mults.indexOf(valor);
+  mults.splice(index,1);
+  $(`#mult-${fila}-${columna}-${idx}`).remove();
+
+  aplicarMultiplicadores(fila,columna);
+}
+
+function aplicarMultiplicadores(fila,columna){
+  let base = tiradas[fila * 2 + columna];
+  let mults = multiplicadores[fila * 2 + columna];
+  let multsP = [], multsN = [];
+  let result;
+
+  //Separamos los multiplicadores en positivos y negativos;
+  for(let i = 0; i < mults.length; i++){
+    let mult = mults[i];
+    if(mult >= 1){
+      multsP.push(mult);
     } else {
-      input.removeClass("tirada-potenciada");
-      input.removeClass("tirada-reducida");
+      multsN.push(mult);
     }
   }
+
+  //Aplicamos los multiplicadores positivos
+  result = base;
+  for (let i = 0; i < multsP.length; i++){
+    result += Math.floor((multsP[i]-1) * base);
+  }
+
+  //Aplicamos los multiplicadores negativos
+  let newBase = result;
+  for (let i = 0; i < multsN.length; i++){
+    result -= Math.floor(multsN[i] * newBase);
+  }
+
+  if (result < 0) result = 0;
+
+  let input = $(`#input-tirada-${fila}-${columna}`);
+  input.val(result);
+  if(result - base > 0){
+    input.addClass("tirada-potenciada");
+    input.removeClass("tirada-reducida");
+  } else if(result - base < 0) {
+    input.removeClass("tirada-potenciada");
+    input.addClass("tirada-reducida");
+  } else {
+    input.removeClass("tirada-potenciada");
+    input.removeClass("tirada-reducida");
+  }
+}
+
+function verSinMultiplicador(fila,columna){
+  if(tiradas[fila * 2 + columna] == 0) return;
+
+  let input = $(`#input-tirada-${fila}-${columna}`);
+  input.val(tiradas[fila * 2 + columna]);
+  input.removeClass("tirada-potenciada");
+  input.removeClass("tirada-reducida");
 }
 
 function añadirDisparo(tipo) {
@@ -237,10 +304,6 @@ function quitarDisparo(tipo) {
 }
 
 function recalcularDisparosExtra() {
-  // disparosextra = 0
-  // for (let i = 0; i < (disparosnormales + disparosdebilidad + disparosextra); i++) {
-  //   if (i % 2 == 1) disparosextra++;
-  // }
   disparosextra = Math.floor((disparosnormales + disparosdebilidad) / 2);
 }
 
@@ -316,60 +379,3 @@ function mostrarModal(talento) {
   $('#modaltalento-tipo').html(`Tipo: ${talento.tipo}`);
   $('#myModal').modal('show');
 }
-
-// function autocomplete(inp, arr) {
-//   var currentFocus;
-//   inp.addEventListener("input", function (e) {
-//     var a, b, i, count = 0, val = this.value;
-//     val = val.split(' ').at(-1);
-//     closeAllLists();
-//     if (!val) { return false; }
-//     currentFocus = -1;
-//     a = document.createElement("DIV");
-//     a.setAttribute("id", this.id + "autocomplete-list");
-//     a.setAttribute("class", "autocomplete-items");
-//     this.parentNode.appendChild(a);
-//     for (i = 0; i < arr.length; i++) {
-//       let valmin = val.toLowerCase();
-//       if (arr[i].includes(val.toLowerCase()) && count < 20) {
-//         count++; b = document.createElement("DIV");
-//         b.innerHTML = arr[i].replace(valmin, `<strong>${valmin}</strong>`);
-//         b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-//         b.addEventListener("click", function (e) {
-//           inp.value = inp.value.replace(val, this.getElementsByTagName("input")[0].value);
-//           closeAllLists();
-//         });
-//         a.appendChild(b);
-//       }
-//     }
-//   });
-//   inp.addEventListener("keydown", function (e) {
-//     var x = document.getElementById(this.id + "autocomplete-list");
-//     if (x) x = x.getElementsByTagName("div");
-//     if (e.keyCode == 40) {
-//       currentFocus++; addActive(x);
-//     } else if (e.keyCode == 38) {
-//       currentFocus--;
-//       addActive(x);
-//     } else if (e.keyCode == 13) {
-//       e.preventDefault();
-//       if (currentFocus > -1) {
-//         if (x) x[currentFocus].click();
-//       } else {
-//         closeAllLists();
-//       } handlerEnter()
-//     }
-//   });
-//   function addActive(x) {
-//     if (!x) return false;
-//     removeActive(x);
-//     if (currentFocus >= x.length) currentFocus = 0;
-//     if (currentFocus < 0) currentFocus = (x.length - 1);
-//     x[currentFocus].classList.add("autocomplete-active");
-//   }
-//   function removeActive(x) {
-//     for (var i = 0; i < x.length; i++) {
-//       x[i].classList.remove("autocomplete-active");
-//     }
-//   }
-// }
