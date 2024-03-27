@@ -275,6 +275,10 @@ select {
   column-gap: 1px;
 }
 
+.selector-elemento-fila{
+  padding-inline: 5px !important;
+}
+
 .imagen-elemento{
   width: 20px;
   height: 20px;

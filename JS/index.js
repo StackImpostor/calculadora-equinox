@@ -400,7 +400,7 @@ function htmlTirada(fila){
       codigo += `<div class="input-group input-group-sm flex-nowrap">`
 
       if(i == 0){
-        codigo += `<span id="select-elemento-${fila}" class="input-group-text" data-bs-toggle="dropdown"><img src="img/${elementoPorDefecto}.svg" alt="${elementoPorDefecto}" class="imagen-elemento"></span>`;
+        codigo += `<span id="select-elemento-${fila}" class="input-group-text selector-elemento-fila" data-bs-toggle="dropdown"><img src="img/${elementoPorDefecto}.svg" alt="${elementoPorDefecto}" class="imagen-elemento"></span>`;
         codigo += `<ul class="dropdown-menu selector-elementos" aria-labelledby="selectElementoPorDefecto">
                     <li><a class="dropdown-item" href="#" onclick="cambiarElemento(${fila},'fuego')"><img src="img/fuego.svg" alt="Fuego" class="imagen-elemento"></a></li>
                     <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElemento(${fila},'agua')"><img src="img/agua.svg" alt="Agua" class="imagen-elemento"></a></li> -->
