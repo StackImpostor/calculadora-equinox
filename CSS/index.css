@@ -260,6 +260,20 @@ select {
   border-radius: 50px;
 }
 
+.btn:hover {
+  background-color: #F8F9FA;
+  color: #6C757D;
+}
+
+.btn:active {
+  background-color: #6C757D;
+  color: #F8F9FA;
+}
+
+.btn:focus {
+  box-shadow: none !important;
+}
+
 .multiplicadores-tirada{
   display: flex;
   background-color: #E9ECEF;

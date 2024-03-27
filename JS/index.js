@@ -29,7 +29,7 @@ $(document).ready(() => {
       vida = personaje.estadisticas.vida;
       window.navigator.vibrate("10");
       updateDisplayStats();
-      // saveData();
+      saveData();
       console.log("Activado long press");
     });
   });
@@ -38,7 +38,7 @@ $(document).ready(() => {
       energia = personaje.estadisticas.energia;
       window.navigator.vibrate("10");
       updateDisplayStats();
-      // saveData();
+      saveData();
       console.log("Activado long press");
     });
   });
@@ -47,7 +47,7 @@ $(document).ready(() => {
       mana = personaje.estadisticas.mana;
       window.navigator.vibrate("10");
       updateDisplayStats();
-      // saveData();
+      saveData();
       console.log("Activado long press");
     });
   });
@@ -94,7 +94,7 @@ function updateStats(v, e, m) {
   pmana = mana;
   mana += m;
   updateDisplayStats();
-  // saveData();
+  saveData();
 }
 
 function updateDisplayStats() {
@@ -267,6 +267,7 @@ function cambiarElementoPorDefecto(elemento = "hielo"){
   let prevElem = elementoPorDefecto;
   elementoPorDefecto = elemento;
   $("#selectElementoPorDefecto").html(`<img src="img/${elemento}.svg" alt="${elemento}" class="imagen-elemento">`)
+  saveData();
 
   //Si todos los disparos tienen el elmento por defecto, cambiarlos.
   if(elementos.length > 0){
