@@ -1,12 +1,15 @@
 let vida = personaje.estadisticas.vida, pvida = vida;
 let energia = personaje.estadisticas.energia, penergia = energia;
 let mana = personaje.estadisticas.mana, pmana = mana;
+let elementoPorDefecto = "fuego";
 
 let disparosnormales = 0;
 let disparosdebilidad = 0;
 let disparosextra = 0;
 let disparosreaccion = 0;
 let tiradas = [];
+let multiplicadores = [];
+let elementos = [];
 
 $(document).ready(() => {
   loadData();
@@ -26,7 +29,7 @@ $(document).ready(() => {
       vida = personaje.estadisticas.vida;
       window.navigator.vibrate("10");
       updateDisplayStats();
-      // saveData();
+      saveData();
       console.log("Activado long press");
     });
   });
@@ -35,7 +38,7 @@ $(document).ready(() => {
       energia = personaje.estadisticas.energia;
       window.navigator.vibrate("10");
       updateDisplayStats();
-      // saveData();
+      saveData();
       console.log("Activado long press");
     });
   });
@@ -44,7 +47,7 @@ $(document).ready(() => {
       mana = personaje.estadisticas.mana;
       window.navigator.vibrate("10");
       updateDisplayStats();
-      // saveData();
+      saveData();
       console.log("Activado long press");
     });
   });
@@ -91,7 +94,7 @@ function updateStats(v, e, m) {
   pmana = mana;
   mana += m;
   updateDisplayStats();
-  // saveData();
+  saveData();
 }
 
 function updateDisplayStats() {
@@ -130,48 +133,31 @@ function updateDisplayTiradas() {
   //Si sobran disparos se quitan
   while(tiradas.length/2 > disparostotales){
     tiradas.splice(tiradas.length - 2, 2);
+    multiplicadores.splice(multiplicadores.length - 2 , 2);
+    elementos.pop();
     $('#tiradas').children().last().remove();
   }
 
   //Si faltan disparos se añaden
   while(tiradas.length/2 < disparostotales){
     tiradas.push(0,0);
-    let idx = tiradas.length / 2;
-    let codigo = '<div class="tirada">';
-    for(let i = 0; i < 2; i++){
-      codigo += `<div class="input-group input-group-sm flex-nowrap">
-                  ${(i == 0) ? `<span class="input-group-text">${idx}:</span>` : `<span class="input-group-text"><i class="fa-solid fa-dove"></i></span>`}
-                  <input id="input-tirada-${idx}-${i}" type="number" class="form-control" ${(i==1) ? "tabindex=-1" : ""} onchange="guardarResultados(${idx},${i})">
-                  <button id="boton-multiplicador-${idx}-${i}" class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                    x1
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},0.5)" type="button">x0'5</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1)" type="button">x1</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.3)" type="button">x1'3</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.5)" type="button">x1'5</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},1.95)" type="button">x1'95</button></li>
-                    <li><button class="dropdown-item" onclick="cambiarMultiplicador(${idx},${i},2)" type="button">x2</button></li>
-                  </ul>
-                  <button class="btn btn-sm btn-outline-secondary" onclick="bloquear(${idx},${i})"><i class="fa-solid fa-check"></i></button>
-                </div>`;
-    }
-    codigo += '</div>'
+    multiplicadores.push([],[]);
+    elementos.push("placeholder");
+    let idx = (tiradas.length / 2)-1;
+    let codigo = htmlTirada(idx);
     $('#tiradas').append(codigo);
+    cambiarElemento(idx,elementoPorDefecto);
   }
 }
 
-function guardarResultados(fila, columna){
-  let idx = (fila-1) * 2 + columna;
+function guardarTirada(fila, columna){
+  let idx = fila * 2 + columna;
   let valor = parseInt($(`#input-tirada-${fila}-${columna}`).val());
-  $(`#input-tirada-${fila}-${columna}`).removeClass("tirada-potenciada");
-  $(`#input-tirada-${fila}-${columna}`).removeClass("tirada-reducida");
   tiradas[idx++] = valor;
   if(columna == 0){
     tiradas[idx] = valor + 2;
     $(`#input-tirada-${fila}-1`).val(tiradas[idx]);
-    $(`#input-tirada-${fila}-1`).removeClass("tirada-potenciada");
-    $(`#input-tirada-${fila}-1`).removeClass("tirada-reducida");
+    $(`#input-tirada-${fila}-1`).trigger("blur");
   }
 }
 
@@ -180,22 +166,137 @@ function bloquear(fila,columna){
   $(`#boton-multiplicador-${fila}-${columna}`).prop("disabled",!$(`#boton-multiplicador-${fila}-${columna}`).prop("disabled"));
 }
 
-function cambiarMultiplicador(fila,columna,valor){
-  $(`#boton-multiplicador-${fila}-${columna}`).html(("x"+valor).replace('.','\''));
-  let idx = (fila-1) * 2 + columna;
-  if(tiradas[idx] > 0){
-    let input = $(`#input-tirada-${fila}-${columna}`);
-    input.val(Math.floor(tiradas[idx] * valor));
-    if(valor > 1){
-      input.addClass("tirada-potenciada");
-      input.removeClass("tirada-reducida");
-    } else if(valor < 1) {
-      input.removeClass("tirada-potenciada");
-      input.addClass("tirada-reducida");
-    } else {
-      input.removeClass("tirada-potenciada");
-      input.removeClass("tirada-reducida");
+function añadirMultiplicador(fila,columna,valor){
+  let mults = multiplicadores[fila * 2 + columna];
+  
+  let idx = mults.length;
+  mults.push(valor);
+
+  let pill = `<span id="mult-${fila}-${columna}-${idx}" onclick="quitarMultiplicador(${fila},${columna},${idx},${valor})" class="pill">x${valor}</span>`;
+  $(`#multiplicadores-tirada-${fila}-${columna}`).append(pill);
+  
+  aplicarMultiplicadores(fila,columna);
+}
+
+function añadirMultiplicadorCustom(fila,columna){
+  let input = $(`#multiplicador-custom-${fila}-${columna}`);
+  let valor = input.val();
+  //Reemplazamos las , y ' por .
+  valor = valor.replace(",",".");
+  valor = valor.replace("'",".");
+  valor = Number.parseFloat(valor);
+
+  input.val("");
+  añadirMultiplicador(fila,columna,valor);
+}
+
+function quitarMultiplicador(fila,columna,idx,valor){
+  let mults = multiplicadores[fila * 2 + columna];
+  let index = mults.indexOf(valor);
+  mults.splice(index,1);
+
+  if(idx >= 0){
+    $(`#mult-${fila}-${columna}-${idx}`).remove();
+  } else {
+    let spans = $(`#multiplicadores-tirada-${fila}-${columna}`).children(`span:contains('x${valor}')`);
+    if(spans.length > 0){
+      spans[0].remove();
     }
+  }
+  
+  aplicarMultiplicadores(fila,columna);
+}
+
+function aplicarMultiplicadores(fila,columna){
+  let input = $(`#input-tirada-${fila}-${columna}`);
+  let base = tiradas[fila * 2 + columna];
+  let mults = multiplicadores[fila * 2 + columna];
+  let multsP = [], multsN = [];
+  let result;
+
+  //Si el input está vacio abortamos
+  if(!input.val()) return;
+
+  //Separamos los multiplicadores en positivos y negativos;
+  for(let i = 0; i < mults.length; i++){
+    let mult = mults[i];
+    if(mult >= 1){
+      multsP.push(mult);
+    } else {
+      multsN.push(mult);
+    }
+  }
+
+  //Aplicamos los multiplicadores positivos
+  result = base;
+  for (let i = 0; i < multsP.length; i++){
+    result += Math.floor((multsP[i]-1) * base);
+  }
+
+  //Aplicamos los multiplicadores negativos
+  let newBase = result;
+  for (let i = 0; i < multsN.length; i++){
+    result -= Math.floor(multsN[i] * newBase);
+  }
+
+  if (result < 0) result = 0;
+
+  input.val(result);
+  if(result - base > 0){
+    input.addClass("tirada-potenciada");
+    input.removeClass("tirada-reducida");
+  } else if(result - base < 0) {
+    input.removeClass("tirada-potenciada");
+    input.addClass("tirada-reducida");
+  } else {
+    input.removeClass("tirada-potenciada");
+    input.removeClass("tirada-reducida");
+  }
+}
+
+function verSinMultiplicador(fila,columna){
+  if(tiradas[fila * 2 + columna] == 0) return;
+
+  let input = $(`#input-tirada-${fila}-${columna}`);
+  input.val(tiradas[fila * 2 + columna]);
+  input.removeClass("tirada-potenciada");
+  input.removeClass("tirada-reducida");
+}
+
+function cambiarElementoPorDefecto(elemento = "hielo"){
+  let prevElem = elementoPorDefecto;
+  elementoPorDefecto = elemento;
+  $("#selectElementoPorDefecto").html(`<img src="img/${elemento}.svg" alt="${elemento}" class="imagen-elemento">`)
+  saveData();
+
+  //Si todos los disparos tienen el elmento por defecto, cambiarlos.
+  if(elementos.length > 0){
+    let todosPorDefecto = true;
+    for(let i = 0; i < elementos.length && todosPorDefecto; i++){
+      todosPorDefecto = todosPorDefecto && elementos[i] === prevElem;
+    }
+    if(todosPorDefecto){
+      for(let i = 0; i < elementos.length; i++){
+        cambiarElemento(i,elemento);
+      }
+    }
+  }
+}
+
+function cambiarElemento(fila,elemento){
+  let prevElem = elementos[fila];
+  elementos[fila] = elemento;
+  $(`#select-elemento-${fila}`).html(`<img src="img/${elemento}.svg" alt="${elemento}" class="imagen-elemento">`);
+
+  //Si el elemento es fuego añadir multiplicador de 1.3
+  if(elemento === "fuego"){
+    añadirMultiplicador(fila,0,1.3);
+    añadirMultiplicador(fila,1,1.3);
+  }
+  //Si el elemento anterior era fuego quitar multiplicador de 1.3
+  if(prevElem === "fuego"){
+    quitarMultiplicador(fila,0,-1,1.3); //-1 significa el primero que te encuentres
+    quitarMultiplicador(fila,1,-1,1.3);
   }
 }
 
@@ -236,11 +337,24 @@ function quitarDisparo(tipo) {
   updateDisplayTiradas();
 }
 
+function togglePajaro(fila,columna){
+
+  if($(`#boton-multiplicador-${fila}-${columna}`).is(":hidden")){
+    $(`#input-tirada-${fila}-${columna}`).css("visibility", "");
+    $(`#boton-multiplicador-${fila}-${columna}`).show("fast");
+    $(`#boton-bloqueo-${fila}-${columna}`).show("fast");
+    $(`#multiplicadores-tirada-${fila}-${columna}`).show("fast");
+  } else {
+    $(`#input-tirada-${fila}-${columna}`).css("visibility", "hidden");
+    $(`#boton-multiplicador-${fila}-${columna}`).hide("fast");
+    $(`#boton-bloqueo-${fila}-${columna}`).hide("fast");
+    $(`#multiplicadores-tirada-${fila}-${columna}`).hide("fast");
+  }
+
+  
+}
+
 function recalcularDisparosExtra() {
-  // disparosextra = 0
-  // for (let i = 0; i < (disparosnormales + disparosdebilidad + disparosextra); i++) {
-  //   if (i % 2 == 1) disparosextra++;
-  // }
   disparosextra = Math.floor((disparosnormales + disparosdebilidad) / 2);
 }
 
@@ -280,6 +394,60 @@ function htmlTalento(talento, sub = false) {
   return res;
 }
 
+function htmlTirada(fila){
+  let codigo = '<div class="tirada">';
+    for(let i = 0; i < 2; i++){
+      codigo += `<div>`;
+      codigo += `<div class="input-group input-group-sm flex-nowrap">`
+
+      if(i == 0){
+        codigo += `<span id="select-elemento-${fila}" class="input-group-text selector-elemento-fila" data-bs-toggle="dropdown"><img src="img/${elementoPorDefecto}.svg" alt="${elementoPorDefecto}" class="imagen-elemento"></span>`;
+        codigo += `<ul class="dropdown-menu selector-elementos" aria-labelledby="selectElementoPorDefecto">
+                    <li><a class="dropdown-item" href="#" onclick="cambiarElemento(${fila},'fuego')"><img src="img/fuego.svg" alt="Fuego" class="imagen-elemento"></a></li>
+                    <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElemento(${fila},'agua')"><img src="img/agua.svg" alt="Agua" class="imagen-elemento"></a></li> -->
+                    <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElemento(${fila},'tierra')"><img src="img/tierra.svg" alt="Tierra" class="imagen-elemento"></a></li> -->
+                    <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElemento(${fila},'viento')"><img src="img/viento.svg" alt="Viento" class="imagen-elemento"></a></li> -->
+                    <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElemento(${fila},'luz'})"><img src="img/luz.svg" alt="Luz" class="imagen-elemento"></a></li> -->
+                    <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElemento(${fila},'oscuridad')"><img src="img/oscuridad.svg" alt="Oscuridad" class="imagen-elemento"></a></li> -->
+                    <li><a class="dropdown-item" href="#" onclick="cambiarElemento(${fila},'hielo')"><img src="img/hielo.svg" alt="Hielo" class="imagen-elemento"></a></li>
+                    <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElemento(${fila},'rayo')"><img src="img/rayo.svg" alt="Rayo" class="imagen-elemento"></a></li> -->
+                    <li><a class="dropdown-item" href="#" onclick="cambiarElemento(${fila},'fisico')"><img src="img/fisico.svg" alt="Físico" class="imagen-elemento"></a></li>
+                  </ul>`;
+      } else {
+        codigo += `<span class="input-group-text" onclick="togglePajaro(${fila},${i})"><i class="fa-solid fa-dove"></i></span>`;
+      }
+
+      // codigo += `${(i == 0) ? `<span class="input-group-text"><img src="img/${elementoPorDefecto}.svg" alt="${elementoPorDefecto}" class="imagen-elemento"></span>` : `<span class="input-group-text"><i class="fa-solid fa-dove"></i></span>`}`
+      codigo += ` <input id="input-tirada-${fila}-${i}" type="number" class="form-control" ${(i==1) ? "tabindex=-1" : ""} onchange="guardarTirada(${fila},${i})" onfocus="verSinMultiplicador(${fila},${i})" onblur="aplicarMultiplicadores(${fila},${i})">
+                  <button id="boton-multiplicador-${fila}-${i}" class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                    x?
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li><button class="dropdown-item" onclick="añadirMultiplicador(${fila},${i},0.5)" type="button">x0'5</button></li>
+                    <li><button class="dropdown-item" onclick="añadirMultiplicador(${fila},${i},1.3)" type="button">x1'3</button></li>
+                    <li><button class="dropdown-item" onclick="añadirMultiplicador(${fila},${i},1.5)" type="button">x1'5</button></li>
+                    <li><button class="dropdown-item" onclick="añadirMultiplicador(${fila},${i},2)" type="button">x2</button></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <div class="input-group">
+                        <input type="number" id="multiplicador-custom-${fila}-${i}" class="form-control" placeholder="Custom" aria-label="Custom" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="añadirMultiplicadorCustom(${fila},${i})">+</button>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <button id="boton-bloqueo-${fila}-${i}" class="btn btn-sm btn-outline-secondary" onclick="bloquear(${fila},${i})"><i class="fa-solid fa-check"></i></button>
+                </div>`;
+      
+      codigo += `<div id="multiplicadores-tirada-${fila}-${i}" class="multiplicadores-tirada">
+                </div>`;
+      codigo += `</div>`;
+    }
+    codigo += '</div>'
+  return codigo;
+}
+
 function getTalento(nombre) {
   console.log(nombre)
   let lista = [].concat(personaje.talentos);
@@ -316,60 +484,3 @@ function mostrarModal(talento) {
   $('#modaltalento-tipo').html(`Tipo: ${talento.tipo}`);
   $('#myModal').modal('show');
 }
-
-// function autocomplete(inp, arr) {
-//   var currentFocus;
-//   inp.addEventListener("input", function (e) {
-//     var a, b, i, count = 0, val = this.value;
-//     val = val.split(' ').at(-1);
-//     closeAllLists();
-//     if (!val) { return false; }
-//     currentFocus = -1;
-//     a = document.createElement("DIV");
-//     a.setAttribute("id", this.id + "autocomplete-list");
-//     a.setAttribute("class", "autocomplete-items");
-//     this.parentNode.appendChild(a);
-//     for (i = 0; i < arr.length; i++) {
-//       let valmin = val.toLowerCase();
-//       if (arr[i].includes(val.toLowerCase()) && count < 20) {
-//         count++; b = document.createElement("DIV");
-//         b.innerHTML = arr[i].replace(valmin, `<strong>${valmin}</strong>`);
-//         b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-//         b.addEventListener("click", function (e) {
-//           inp.value = inp.value.replace(val, this.getElementsByTagName("input")[0].value);
-//           closeAllLists();
-//         });
-//         a.appendChild(b);
-//       }
-//     }
-//   });
-//   inp.addEventListener("keydown", function (e) {
-//     var x = document.getElementById(this.id + "autocomplete-list");
-//     if (x) x = x.getElementsByTagName("div");
-//     if (e.keyCode == 40) {
-//       currentFocus++; addActive(x);
-//     } else if (e.keyCode == 38) {
-//       currentFocus--;
-//       addActive(x);
-//     } else if (e.keyCode == 13) {
-//       e.preventDefault();
-//       if (currentFocus > -1) {
-//         if (x) x[currentFocus].click();
-//       } else {
-//         closeAllLists();
-//       } handlerEnter()
-//     }
-//   });
-//   function addActive(x) {
-//     if (!x) return false;
-//     removeActive(x);
-//     if (currentFocus >= x.length) currentFocus = 0;
-//     if (currentFocus < 0) currentFocus = (x.length - 1);
-//     x[currentFocus].classList.add("autocomplete-active");
-//   }
-//   function removeActive(x) {
-//     for (var i = 0; i < x.length; i++) {
-//       x[i].classList.remove("autocomplete-active");
-//     }
-//   }
-// }

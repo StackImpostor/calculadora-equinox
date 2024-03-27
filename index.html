@@ -49,7 +49,7 @@
   </header>
   <!-- Calculadora disparos -->
   <div id="calculadora-disparos" class="dflex flex-column">
-    <h5 class="mt-3">Disparos normales: <span id="num-disparos-normales"></span></h5>
+    <h5 class="mt-3 ms-2">Disparos normales: <span id="num-disparos-normales"></span></h5>
     <div id="disparos-normales" class="px-2 contenedor-disparos">
       <button class="btn btn-sm btn-outline-secondary mx-2" onclick="añadirDisparo('normal')">+</button>
     </div>
@@ -57,11 +57,11 @@
     <div id="disparos-debilidad" class="px-2 contenedor-disparos" style="display:none">
       <button class="btn btn-sm btn-outline-secondary mx-2" onclick="añadirDisparo('debilidad')">+</button>
     </div>
-    <h6>Extras: <span id="num-disparos-reaccion"></span></h6>
+    <h6 class="ms-2">Extras: <span id="num-disparos-reaccion"></span></h6>
     <div id="disparos-reaccion" class="px-2 contenedor-disparos">
       <button class="btn btn-sm btn-outline-secondary mx-2" onclick="añadirDisparo('reaccion')">+</button>
     </div>
-    <h5 class="mt-3">Disparos totales: <span id="num-disparos-totales"></span></h5>
+    <h5 class="mt-3 ms-2">Disparos totales: <span id="num-disparos-totales"></span></h5>
     <div id="disparos-totales" class="px-2 contenedor-disparos">
 
     </div>
@@ -69,14 +69,32 @@
   </div>
   <hr/>
   
-  <h5 data-bs-toggle="collapse" data-bs-target="#tiradas" class="toggle-tiradas mb-4 ">Tiradas  <i class="fa-solid fa-caret-down active"></i></h5>
-  <div id="tiradas" class="collapse show">
-    
-    
+  <!-- Display tiradas -->
+  <div id="header-tiradas">
+    <h5 class="toggle-tiradas mb-4 ms-2">Tiradas</h5>
+    <div class="me-2">
+      <label for="selectElementoPorDefecto">Elemento por defecto</label>
+      
+      <button class="btn btn-light btn-outline-secondary dropdown-toggle" type="button" id="selectElementoPorDefecto" data-bs-toggle="dropdown" aria-expanded="false"></button>
+      <ul class="dropdown-menu selector-elementos" aria-labelledby="selectElementoPorDefecto">
+        <li><a class="dropdown-item" href="#" onclick="cambiarElementoPorDefecto('fuego')"><img src="img/fuego.svg" alt="Fuego" class="imagen-elemento"></a></li>
+        <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElementoPorDefecto('agua')"><img src="img/agua.svg" alt="Agua" class="imagen-elemento"></a></li> -->
+        <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElementoPorDefecto('tierra')"><img src="img/tierra.svg" alt="Tierra" class="imagen-elemento"></a></li> -->
+        <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElementoPorDefecto('viento')"><img src="img/viento.svg" alt="Viento" class="imagen-elemento"></a></li> -->
+        <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElementoPorDefecto('luz')"><img src="img/luz.svg" alt="Luz" class="imagen-elemento"></a></li> -->
+        <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElementoPorDefecto('oscuridad')"><img src="img/oscuridad.svg" alt="Oscuridad" class="imagen-elemento"></a></li> -->
+        <li><a class="dropdown-item" href="#" onclick="cambiarElementoPorDefecto('hielo')"><img src="img/hielo.svg" alt="Hielo" class="imagen-elemento"></a></li>
+        <!-- <li><a class="dropdown-item" href="#" onclick="cambiarElementoPorDefecto('rayo')"><img src="img/rayo.svg" alt="Rayo" class="imagen-elemento"></a></li> -->
+        <li><a class="dropdown-item" href="#" onclick="cambiarElementoPorDefecto('fisico')"><img src="img/fisico.svg" alt="Físico" class="imagen-elemento"></a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="tiradas">
+     
   </div>
 
   <!-- Notas -->
-  <div id="apuntes" class="apuntes">
+  <div id="apuntes" class="apuntes" oninput="saveData()">
     <div id="apuntesheader">
     </div>
     <textarea id="notas"></textarea>
