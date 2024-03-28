@@ -2,9 +2,9 @@
   --fondo-boton-talentos: #f7f7f7;
   --borde-boton-talentos: #a7a7a7;
   
-  --fondo-caja-stats: #a7a7a7;
+  --fondo-caja-stats: rgb(209, 209, 209);
   --borde-caja-stats: rgb(75, 75, 75);
-  --fondo-caja-stats-active: rgb(130, 130, 130);
+  --fondo-caja-stats-active: #a7a7a7;
 
   --fondo-talento: var(--borde-boton-talentos);
   --borde-talento: 32;
@@ -141,6 +141,8 @@ header {
 
 .display-stat {
   flex-grow: 1;
+  align-content: center;
+  padding-bottom: 2px;
 }
 
 .display-stat:active {
