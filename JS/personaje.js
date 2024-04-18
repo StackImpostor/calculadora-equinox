@@ -4,7 +4,7 @@ let personaje = {
   "nivel": 10,
   "estadisticas": {
     "vida": 27,
-    "energia": 43,
+    "energia": 44,
     "mana": 25
   },
   "atributos": {
@@ -101,8 +101,20 @@ let personaje = {
       "subtalentos":[]
     },
     {
-      "nombre": "Giro fuego (Nombre WIP)",
+      "nombre": "Ignición",
       "descripción": "Un disparo de fuego que no hace daño pero aplica el estado \"quemado\" al objetivo.\nEl objetivo recibe 5 daños al final de cada turno.",
+      "tipo": "Técnica inventada",
+      "activa": true,
+      "costeenergia": 0,
+      "costemana":5,
+      "costevida":0,
+      "cooldown": 3,
+      "acciones": 1,
+      "subtalentos":[]
+    },
+    {
+      "nombre": "Prisión helada",
+      "descripción": "Un disparo de hielo que no hace daño pero congela al objetivo. Encierra al objetivo en un bloque de hielo. Se puede elegir que partes especificar. No es compatible con Disparo de Halcón.",
       "tipo": "Técnica inventada",
       "activa": true,
       "costeenergia": 0,
