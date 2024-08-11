@@ -3,9 +3,9 @@ let personaje = {
   "clase": "-",
   "nivel": 10,
   "estadisticas": {
-    "vida": 28,
-    "energia": 44,
-    "mana": 25
+    "vida": 32,
+    "energia": 45,
+    "mana": 28
   },
   "atributos": {
     "fuerza": 4,
